@@ -1,23 +1,18 @@
 from fastai.core import *
 from fastai.vision import *
 from matplotlib.axes import Axes
-from matplotlib.figure import Figure
-from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from .filters import IFilter, MasterFilter, ColorizerFilter
 from .generators import gen_inference_deep, gen_inference_wide
-from tensorboardX import SummaryWriter
-from scipy import misc
 from PIL import Image
 import ffmpeg
 import youtube_dl
-import gc
-import requests
 from io import BytesIO
 import base64
 from IPython import display as ipythondisplay
 from IPython.display import HTML
 from IPython.display import Image as ipythonimage
 import cv2
+from security import safe_requests
 
 
 # adapted from https://www.pyimagesearch.com/2016/04/25/watermarking-images-with-opencv-and-python/
@@ -62,7 +57,7 @@ class ModelImageVisualizer:
         return PIL.Image.open(path).convert('RGB')
 
     def _get_image_from_url(self, url: str) -> Image:
-        response = requests.get(url, timeout=30, headers={'Accept': '*/*;q=0.8'})
+        response = safe_requests.get(url, timeout=30, headers={'Accept': '*/*;q=0.8'})
         img = PIL.Image.open(BytesIO(response.content)).convert('RGB')
         return img
 

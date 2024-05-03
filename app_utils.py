@@ -1,13 +1,11 @@
 import os
-import requests
-import random
 import _thread as thread
 from uuid import uuid4
 
 import numpy as np
-import skimage
 from skimage.filters import gaussian
 from PIL import Image
+from security import safe_requests
 
 def compress_image(image, path_original):
     size = 1920, 1080
@@ -82,7 +80,7 @@ def blur(image, x0, x1, y0, y1, sigma=1, multichannel=True):
 
 
 def download(url, filename):
-    data = requests.get(url).content
+    data = safe_requests.get(url).content
     with open(filename, 'wb') as handler:
         handler.write(data)
 
