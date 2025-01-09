@@ -82,7 +82,7 @@ def blur(image, x0, x1, y0, y1, sigma=1, multichannel=True):
 
 
 def download(url, filename):
-    data = requests.get(url).content
+    data = requests.get(url, timeout=60).content
     with open(filename, 'wb') as handler:
         handler.write(data)
 
