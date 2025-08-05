@@ -1,6 +1,6 @@
-import random
 
 from fastai.vision.image import TfmPixel
+import secrets
 
 # Contributed by Rani Horev. Thank you!
 def _noisify(
@@ -13,14 +13,14 @@ def _noisify(
     img_size = h * w
     mult = 10000.0
     pct_pixels = (
-        random.randrange(int(pct_pixels_min * mult), int(pct_pixels_max * mult)) / mult
+        secrets.SystemRandom().randrange(int(pct_pixels_min * mult), int(pct_pixels_max * mult)) / mult
     )
     noise_count = int(img_size * pct_pixels)
 
     for ii in range(noise_count):
-        yy = random.randrange(h)
-        xx = random.randrange(w)
-        noise = random.randrange(-noise_range, noise_range) / 255.0
+        yy = secrets.SystemRandom().randrange(h)
+        xx = secrets.SystemRandom().randrange(w)
+        noise = secrets.SystemRandom().randrange(-noise_range, noise_range) / 255.0
         x[:, yy, xx].add_(noise)
 
     return x
